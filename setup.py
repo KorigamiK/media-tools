@@ -9,7 +9,7 @@ with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as fh:
 
 setup(
     name='super-stream-tools',
-    version='0.1.8',
+    version='0.2.1',
     description='A tool to interact with streaming URLs easily',
     long_description_content_type="text/markdown",
     long_description=long_description,
@@ -34,7 +34,6 @@ setup(
         "Operating System :: MacOS :: MacOS X",
         "Operating System :: Microsoft :: Windows",
     ],
-    package_dir={"": "super_stream_tools"},
-    packages=['include', ],
+    packages=['super_stream_tools', 'super_stream_tools/stream_library'],
     python_requires=">=3.9",
 )

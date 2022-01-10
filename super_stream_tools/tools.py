@@ -1,5 +1,5 @@
 import asyncio
-from include import async_subprocess, save_file, delete_file
+from .stream_library import async_subprocess, save_file, delete_file
 from typing import Optional, TypedDict
 from enum import Enum
 
@@ -66,7 +66,7 @@ class encoder(ffmpeg):
         self.add_argument('reconnect_on_network_error', '1')
         self.add_argument('m3u8_hold_counters', '10')
 
-    async def download(self, video_url: str, subtitles: list[new_subtitle] | None = None, output_file='test.mkv', program=0, thumbnail: str = None, execute=False):
+    async def download(self, video_url: str, subtitles: list[new_subtitle] | None = None, output_file='test.mkv', program=0, audio_lang=None, thumbnail: str = None, execute=False):
         self.add_argument('i', video_url, arg_type.input_sources)
         self.add_argument('map', f'0:p:{program}:v', arg_type.mappings)
         self.add_argument('map', f'0:p:{program}:a?', arg_type.mappings)
@@ -90,6 +90,10 @@ class encoder(ffmpeg):
                               'filename=cover.jpg', arg_type.input_sources)
             if 'http' in thumbnail:
                 delete_file()
+        if audio_lang:
+            self.add_argument('metadata:s:a:0',
+                              f'title="{audio_lang}"', arg_type.metadata)
+
         self.args += self.input_sources
         # self.add_argument('codec', 'copy', arg_type.args)
 
@@ -98,7 +102,7 @@ class encoder(ffmpeg):
         self.args.append(output_file)
 
         if execute:
-            self.execute()
+            await self.execute()
 
     @staticmethod
     async def test():
@@ -108,7 +112,6 @@ class encoder(ffmpeg):
                                  {'url': s2, 'lang': 'es-ES'}],
                                 program=5, thumbnail=t)
         print(instance.args)
-        # await instance.execute()
 
 
 if __name__ == '__main__':
