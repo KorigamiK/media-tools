@@ -8,22 +8,22 @@ setup(
     author='KorigamiK',
     author_email='korigamik@gmail.com',
     license='MIT',
-    packages=['media_tools'],
+    packages=['media_tools', 'media_tools.utils'],
     install_requires=['asyncio',
                       'aiohttp',
                       'aiofiles'
                       ],
     scripts=["bin/media-tools"],
-
+    keywords=['python', 'video', 'stream',
+              'video stream', 'encode', 'ffmpeg'],
     classifiers=[
         'Development Status :: 1 - Planning',
         'Intended Audience :: Science/Research',
-        'License :: OSI Approved :: BSD License',
         'Operating System :: POSIX :: Linux',
         'Programming Language :: Python :: 3.10',
-        'media manipulation',
-        'media creation',
-        'video downloader',
-        'ffmpeg'
+        "Intended Audience :: Developers",
+        "Operating System :: Unix",
+        "Operating System :: MacOS :: MacOS X",
+        "Operating System :: Microsoft :: Windows",
     ],
 )

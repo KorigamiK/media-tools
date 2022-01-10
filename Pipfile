@@ -1,0 +1,26 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+mypy = "*"
+autopep8 = "*"
+
+[packages]
+media_tools = {editable = true,path = "."}
+aiohttp = "*"
+aiofiles = "*"
+asyncio = "*"
+
+[requires]
+python_version = "3.9"
+
+[pipenv]
+allow_prereleases = true
+
+[scripts]
+check_types = "mypy --check-untyped-defs --ignore-missing-imports ."
+# check_formatting = "black --check ."
+# lint = "flake8"
+# format = "black ."
