@@ -2,6 +2,9 @@ import asyncio
 from .stream_library import async_subprocess, save_file, delete_file
 from typing import Optional, TypedDict
 from enum import Enum
+from os import name
+
+is_windows = name == 'nt'
 
 
 class arg_type(Enum):
@@ -21,12 +24,15 @@ class interact_shell:
         # await async_subprocess('pwd')
         await async_subprocess(*self.args, std_inputs=self.input_args)
 
-    def add_argument(self, command: str, value: str | None = None, append_type: arg_type = arg_type.args):
+    def add_argument(self, command: str, value: str | None = None, append_type: arg_type = arg_type.args, protect=False):
         x = self.__getattribute__(append_type.name)
 
         x.append('-'+command)
         if value:
-            x.append(value)
+            if protect:
+                x.append(f'"{value}"')
+            else:
+                x.append(value)
 
     @staticmethod
     def create_args():
@@ -67,13 +73,15 @@ class encoder(ffmpeg):
         self.add_argument('m3u8_hold_counters', '10')
 
     async def download(self, video_url: str, subtitles: list[new_subtitle] | None = None, output_file='test.mkv', program=0, audio_lang=None, thumbnail: str = None, execute=False):
-        self.add_argument('i', video_url, arg_type.input_sources)
+        self.add_argument(
+            'i', video_url, arg_type.input_sources, protect=is_windows)
         self.add_argument('map', f'0:p:{program}:v', arg_type.mappings)
         self.add_argument('map', f'0:p:{program}:a?', arg_type.mappings)
         idx = 0
         if subtitles:
             for idx, i in enumerate(subtitles):
-                self.add_argument('i', i['url'], arg_type.input_sources)
+                self.add_argument(
+                    'i', i['url'], arg_type.input_sources, protect=is_windows)
                 self.add_argument('map', str(idx+1), arg_type.mappings)
 
                 if i['lang']:
