@@ -1,0 +1,1 @@
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QCopyright (c) 2022-2023 KorigamiK\\E$"}
