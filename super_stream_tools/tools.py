@@ -92,7 +92,7 @@ class encoder(ffmpeg):
                 delete_file()
         if audio_lang:
             self.add_argument('metadata:s:a:0',
-                              f'title="{audio_lang}"', arg_type.metadata)
+                              f'language="{audio_lang}"', arg_type.metadata)
 
         self.args += self.input_sources
         # self.add_argument('codec', 'copy', arg_type.args)
