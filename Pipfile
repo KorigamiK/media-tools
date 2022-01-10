@@ -8,7 +8,7 @@ mypy = "*"
 autopep8 = "*"
 
 [packages]
-media_tools = {editable = true,path = "."}
+super_stream_tools = {editable = true,path = "."}
 aiohttp = "*"
 aiofiles = "*"
 asyncio = "*"

@@ -2,7 +2,7 @@
 
 import sys
 
-from media_tools.cli import main
+from super_stream_tools.cli import main
 
 try:
     main()
