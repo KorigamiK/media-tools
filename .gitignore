@@ -152,3 +152,7 @@ cython_debug/
 #.idea/
 
 script.txt
+
+*.mp4
+*.jpg
+*.mkv

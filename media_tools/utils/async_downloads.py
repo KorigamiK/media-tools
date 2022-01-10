@@ -9,3 +9,4 @@ async def save_file(url: str, file_location_name='./cover.jpg'):
                 f = await aiofiles.open(file_location_name, mode='wb')
                 await f.write(await resp.read())
                 await f.close()
+    return file_location_name

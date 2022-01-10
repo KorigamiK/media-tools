@@ -51,10 +51,10 @@ new_subtitle = TypedDict(
 
 
 class encoder(ffmpeg):
-    def __init__(self, hide_banner=False, accept_all_prompts=True, versbose_log_level='warning', overwrite_files=False, verbose=False) -> None:
+    def __init__(self, hide_banner=True, accept_all_prompts=True, versbose_log_level='warning', overwrite_files=False, verbose=False) -> None:
         super().__init__()
         if hide_banner:
-            self.add_argument('hide-banner')
+            self.add_argument('hide_banner')
         if not overwrite_files:
             self.add_argument('n')
         if overwrite_files and accept_all_prompts:
@@ -82,7 +82,7 @@ class encoder(ffmpeg):
         idx += 1
         if thumbnail:
             if 'http' in thumbnail:
-                await save_file(thumbnail)
+                thumbnail = await save_file(thumbnail)
             self.add_argument('attach', thumbnail, arg_type.input_sources)
             self.add_argument(
                 'metadata:s:t:0', 'mimetype="image/jpeg"', arg_type.input_sources)
@@ -95,14 +95,14 @@ class encoder(ffmpeg):
         self.args.append(output_file)
 
     @staticmethod
-    async def test(self):
+    async def test():
         instance = encoder(overwrite_files=True)
-        instance.download(v,
-                          [{'url': s1, 'lang': 'en-US'},
-                           {'url': s2, 'lang': 'es-ES'}],
-                          program=5, thumbnail=t)
-        print(self.args)
-        await self.execute()
+        await instance.download(v,
+                                [{'url': s1, 'lang': 'en-US'},
+                                 {'url': s2, 'lang': 'es-ES'}],
+                                program=5, thumbnail=t)
+        print(instance.args)
+        await instance.execute()
 
 
 if __name__ == '__main__':
