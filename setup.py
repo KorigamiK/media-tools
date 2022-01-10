@@ -9,7 +9,7 @@ with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as fh:
 
 setup(
     name='super-stream-tools',
-    version='0.1.7',
+    version='0.1.8',
     description='A tool to interact with streaming URLs easily',
     long_description_content_type="text/markdown",
     long_description=long_description,
