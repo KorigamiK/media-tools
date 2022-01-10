@@ -1,5 +1,5 @@
 import asyncio
-from utils import async_subprocess, save_file
+from utils import async_subprocess, save_file, delete_file
 from typing import Optional, TypedDict
 from enum import Enum
 
@@ -88,8 +88,11 @@ class encoder(ffmpeg):
                 'metadata:s:t:0', 'mimetype="image/jpeg"', arg_type.input_sources)
             self.add_argument('metadata:s:t:0',
                               'filename=cover.jpg', arg_type.input_sources)
+            if 'http' in thumbnail:
+                delete_file()
         self.args += self.input_sources
         # self.add_argument('codec', 'copy', arg_type.args)
+
         self.args += self.mappings
         self.args += self.metadata
         self.args.append(output_file)

@@ -1,3 +1,4 @@
+import os
 import aiohttp
 import aiofiles
 
@@ -10,3 +11,7 @@ async def save_file(url: str, file_location_name='./cover.jpg'):
                 await f.write(await resp.read())
                 await f.close()
     return file_location_name
+
+
+def delete_file(file_location='./cover.jpg'):
+    os.remove(file_location)
