@@ -5,6 +5,7 @@ from enum import Enum
 from os import name
 
 is_windows = name == 'nt'
+is_windows = False  # I don't know anymore
 
 
 class arg_type(Enum):
@@ -72,7 +73,7 @@ class encoder(ffmpeg):
         self.add_argument('reconnect_on_network_error', '1')
         self.add_argument('m3u8_hold_counters', '10')
 
-    async def download(self, video_url: str, subtitles: list[new_subtitle] | None = None, output_file='test.mkv', program=0, audio_lang=None, thumbnail: str = None, execute=False):
+    async def download(self, video_url: str, subtitles: list[new_subtitle] | None = None, output_file='test.mkv', program=0, audio_lang=None, thumbnail: str = None, execute=False, copy_codec=False):
         self.add_argument(
             'i', video_url, arg_type.input_sources, protect=is_windows)
         self.add_argument('map', f'0:p:{program}:v', arg_type.mappings)
@@ -103,7 +104,8 @@ class encoder(ffmpeg):
                               f'language="{audio_lang}"', arg_type.metadata)
 
         self.args += self.input_sources
-        # self.add_argument('codec', 'copy', arg_type.args)
+        if copy_codec:
+            self.add_argument('codec', 'copy', arg_type.args)
 
         self.args += self.mappings
         self.args += self.metadata
